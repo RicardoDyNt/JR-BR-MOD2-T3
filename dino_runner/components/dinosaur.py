@@ -1,11 +1,11 @@
 import pygame
 from pygame.sprite import Sprite
 
-from dino_runner.utils.constants import DUCKING, RUNNING, JUMPING, DEFAULT_TYPE, SHIELD_TYPE, DUCKING_SHIELD, JUMPING_SHIELD, RUNNING_SHIELD
+from dino_runner.utils.constants import DUCKING, HAMMER_TYPE, RUNNING, JUMPING, DEFAULT_TYPE, SHIELD_TYPE, DUCKING_SHIELD, JUMPING_SHIELD, RUNNING_SHIELD, RUNNING_HAMMER, DUCKING_HAMMER, JUMPING_HAMMER, TIME_TYPE
 
-DUCK_IMG = { DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD}
-JUMP_IMG = { DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD}
-RUN_IMG = { DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD}
+DUCK_IMG = { DEFAULT_TYPE: DUCKING, SHIELD_TYPE: DUCKING_SHIELD, HAMMER_TYPE: DUCKING_HAMMER, TIME_TYPE: DUCKING,}
+JUMP_IMG = { DEFAULT_TYPE: JUMPING, SHIELD_TYPE: JUMPING_SHIELD, HAMMER_TYPE: JUMPING_HAMMER,TIME_TYPE: JUMPING}
+RUN_IMG = { DEFAULT_TYPE: RUNNING, SHIELD_TYPE: RUNNING_SHIELD, HAMMER_TYPE: RUNNING_HAMMER,TIME_TYPE: RUNNING}
 X_POS = 80
 Y_POS = 310
 JUMP_VEL = 8.5
@@ -28,6 +28,8 @@ class Dinosaur(Sprite):
     def setup_state(self):
         self.has_power_up = False
         self.shield = False
+        self.hammer = False
+        self.time = False
         self.show_text = False
         self.shield_time_up = 0
 
@@ -83,3 +85,6 @@ class Dinosaur(Sprite):
         self.dino_rect.y = Y_POS + 30
         self.step_index += 1
         self.dino_duck = False
+
+
+        

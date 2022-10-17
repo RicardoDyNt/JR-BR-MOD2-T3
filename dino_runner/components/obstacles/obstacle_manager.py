@@ -3,7 +3,8 @@ import random
 
 from dino_runner.components.obstacles.cactus import CactusSmall, CactusLarge
 from dino_runner.components.obstacles.bird import Bird
-from dino_runner.utils.constants import BIRD, SMALL_CACTUS, LARGE_CACTUS
+from dino_runner.utils.constants import BIRD, HAMMER_TYPE, SHIELD_TYPE, SMALL_CACTUS, LARGE_CACTUS, TIME_TYPE, DEATH_SOND
+from pygame import mixer
 
 
 class ObstacleManager:
@@ -26,9 +27,19 @@ class ObstacleManager:
                     pygame.time.delay(500)
                     game.playing = False
                     game.death_count += 1
+                    self.play_music_death()
                     break
-                else:
-                    self.obstacles.remove(obstacle)
+                else: 
+                    if game.player.type == HAMMER_TYPE:
+                        self.obstacles.remove(obstacle)
+                    elif game.player.type == TIME_TYPE:
+                        rapid_or_slowly = random.randint(0,1)
+                        if rapid_or_slowly == 0:
+                            game.game_speed += 20
+                        else:
+                            game.game_speed -= 20
+                            self.obstacles.remove(obstacle)      
+
                        
     def reset_obstacles(self):
         self.obstacles = []     
@@ -36,3 +47,8 @@ class ObstacleManager:
     def draw(self, screen):
         for obstacle in self.obstacles:
             obstacle.draw(screen)        
+
+    def play_music_death(self):
+        pygame.mixer.music.load(DEATH_SOND)
+        pygame.mixer.music.play()
+        pygame.mixer.music.set_volume == 40
